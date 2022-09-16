@@ -1,5 +1,4 @@
 package com.algaworks.algalog.domain.model;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

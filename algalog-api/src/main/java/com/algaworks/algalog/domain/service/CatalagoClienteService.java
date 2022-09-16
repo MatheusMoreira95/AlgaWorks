@@ -13,19 +13,26 @@ public class CatalagoClienteService {
 
     private ClienteRepository clienteRepository;
 
+    public Cliente buscar(Long clienteId) {
+        return clienteRepository.findById(clienteId)
+                .orElseThrow(() -> new NegocioException("Cliente não encontrado"));
+    }
+
+
     @Transactional
-    public Cliente salvar(Cliente cliente){
+    public Cliente salvar(Cliente cliente) {
 
-       boolean emailEmUso= clienteRepository.findByEmail(cliente.getEmail()).stream()
-               .anyMatch(clienteExistente -> !clienteExistente.equals(cliente));
+        boolean emailEmUso = clienteRepository.findByEmail(cliente.getEmail()).stream()
+                .anyMatch(clienteExistente -> !clienteExistente.equals(cliente));
 
-       if(emailEmUso){
-           throw new NegocioException("Ja existe um cliente cadastrado com este e-mail");
-       }
+        if (emailEmUso) {
+            throw new NegocioException("Ja existe um cliente cadastrado com este e-mail");
+        }
         return clienteRepository.save(cliente);
     }
+
     @Transactional
-    public void excluir(Long clienteId){
+    public void excluir(Long clienteId) {
         clienteRepository.deleteById(clienteId);
     }
 
